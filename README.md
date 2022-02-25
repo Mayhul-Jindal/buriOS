@@ -1,6 +1,3 @@
-
----
-
 Setup
 -----
 
@@ -11,8 +8,6 @@ Setup
 3. Add to path both of them in order to run them from your command prompt globally, otherwise you have to specify there .exe eveytime to run a command.
 
 4. Now basically use vscode
-
----
 
 Theory
 ------
@@ -59,9 +54,8 @@ dw 0xaa55
 ; dd - Define double word size(4 bytes) variable
 ```
 - More about `($-$$)`
-  
-![](.\OS_Resources/Screenshot%202022-02-23%20231055.jpg)
 
+![Screenshot 2022-02-23 231055](https://user-images.githubusercontent.com/95216160/155675807-87fa0dcb-6725-4af7-9f37-7b251f1ff12b.jpg)
 
 To compile:
 `nasm -f bin boot_sect_simple.asm -o boot_sect_simple.bin`
@@ -76,5 +70,3 @@ To run:
 > QEMU is a generic and open source machine emulator and virtualizer. When used as a machine emulator, QEMU can run OSes and programs made for one machine (e.g. an ARM board) on a different machine (e.g. your own PC). 
 
 You will see a window open which says "Booting from Hard Disk...". That means setup is correct.
-
----
