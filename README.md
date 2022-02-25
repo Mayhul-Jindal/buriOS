@@ -1,6 +1,16 @@
+
 ---
 
-# setup
+Setup
+-----
+
+1. Download [NASM](https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/) which is an assembler for assembly file.
+
+2. Download [QEMU](https://qemu.weilnetz.de/w64/2021/) for windows(32bit or 64bit)
+
+3. Add to path both of them in order to run them from your command prompt globally, otherwise you have to specify there .exe eveytime to run a command.
+
+4. Now basically use vscode
 
 ---
 
