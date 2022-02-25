@@ -9,7 +9,7 @@ Setup
 
 4. Now basically use vscode
 
-Theory
+Theory For Boot Sector
 ------
 
 When the computer boots, the BIOS doesn't know how to load the OS, so it
