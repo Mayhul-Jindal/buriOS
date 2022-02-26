@@ -73,7 +73,9 @@ You will see a window open which says "Booting from Hard Disk...". That means se
 
 ---
 
-we are going:
+Basic Stuff
+------
+
 1. Write each character of the "Hello", word into the register `al` (lower part of `ax`), the bytes `0x0e` into `ah` (an Interept service routines which indicates tele-type mode) and raise interrupt `0x10` which causes screen-related ISR to invoke.
    
 > We will set tty mode only once, though in the real world we cannot be sure that the contents of ah are constant. Some other process may run on the CPU while we are sleeping, not clean up properly and leave garbage data on ah.
