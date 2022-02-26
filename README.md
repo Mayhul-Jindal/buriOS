@@ -54,19 +54,70 @@ dw 0xaa55
 ; dd - Define double word size(4 bytes) variable
 ```
 - More about `($-$$)`
-
+  
 ![Screenshot 2022-02-23 231055](https://user-images.githubusercontent.com/95216160/155675807-87fa0dcb-6725-4af7-9f37-7b251f1ff12b.jpg)
 
 To compile:
-`nasm -f bin boot_sect_simple.asm -o boot_sect_simple.bin`
+`nasm -f bin boot_sector.asm -o boot_sector.bin`
 
 > Will assemble boot_secot.asm into a raw binary file boot_sector.bin.
 
 > You need to understand how these things work. An assembler in itself doesn’t produce executable code - it produces the input to a linker which links your code to a library of called routines (or else multiple libraries of standard and specialised routines) and then you might be able to interactively run the program.
 
 To run:
-`qemu-system-x86_64 boot_sect_simple.bin`
+`qemu-system-x86_64 boot_sector.bin`
 
 > QEMU is a generic and open source machine emulator and virtualizer. When used as a machine emulator, QEMU can run OSes and programs made for one machine (e.g. an ARM board) on a different machine (e.g. your own PC). 
 
 You will see a window open which says "Booting from Hard Disk...". That means setup is correct.
+
+---
+
+we are going:
+1. Write each character of the "Hello", word into the register `al` (lower part of `ax`), the bytes `0x0e` into `ah` (an Interept service routines which indicates tele-type mode) and raise interrupt `0x10` which causes screen-related ISR to invoke.
+   
+> We will set tty mode only once, though in the real world we cannot be sure that the contents of ah are constant. Some other process may run on the CPU while we are sleeping, not clean up properly and leave garbage data on ah.
+
+2. Learn about memory referncing and offsets
+
+We can access `check_1` or `check_2` in many different ways:
+
+- `mov al, check_1`
+- `mov al, [check_1]`
+- `mov al, check_1 + 0x7C00`
+- `mov al, 2d + 0x7C00`, where `2d` is the actual position of the 'X' byte in the binary
+- Now, since offsetting `0x7c00` everywhere is very inconvenient, assemblers let
+us define a "global offset" for every memory location, with the `org` command:
+
+```nasm
+[org 0x7c00]
+```
+3. Learned about looping and conditional statements
+4. Learned how to take inputs by interept `0x16`
+   
+```nasm
+buffer:
+	times 10 db 0
+	mov bx, buffer
+
+characters: 
+	cmp bx, 10
+	je end
+	mov ah, 0
+	int 0x16
+	mov ah, 0x0e
+	mov [bx], al
+	int 0x10
+	inc bx
+	jmp characters
+
+end:
+	jmp $
+
+times 510-($-$$) db 0
+db 0x55, 0xaa
+```
+> This can handle only 10 keyboard inputs.
+
+You can examine the binary data with `xxd file.bin` which gives us a hex dump.
+
