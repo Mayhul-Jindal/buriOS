@@ -1,6 +1,6 @@
 @echo off
 cd "C:\Users\mayhul_jindal\OneDrive\coding\OS_DEV"
-start nasm -f bin boot_sector.asm -o boot_sector.bin
+start nasm -f bin "16bit-bootloader.asm" -o "16bit-bootloader.bin"
 cd "C:\Users\mayhul_jindal\OneDrive\coding\OS_DEV"
-start qemu-system-x86_64 -drive format=raw,file=boot_sector.bin
+start qemu-system-x86_64 -drive format=raw,file=16bit-bootloader.bin
 pause
