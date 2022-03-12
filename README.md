@@ -94,7 +94,29 @@ us define a "global offset" for every memory location, with the `org` command:
 ```nasm
 [org 0x7c00]
 ```
-3. Learned about looping and conditional statements
+3. Learned about looping,function and conditional statements.
+```nasm
+mov bx, data_to_print
+call print ; This essentialy behaves like jmp but additionally,
+           ; before junping it pushes the return value into the stack.
+
+print:
+    mov ah, 0x0e
+    pusha
+printFunction:
+    mov al,[bx]
+    cmp al,0 ; Conditions in assembly
+    je return
+    int 0x10
+    inc bx
+    jmp printFunction
+return:
+    popa
+    ret ; This pops the the return address of the stack and jmps to it
+
+data_to_print:
+    db "hello world",0
+```
 4. Learned how to take inputs by interept `0x16`
    
 ```nasm
@@ -122,4 +144,41 @@ db 0x55, 0xaa
 > This can handle only 10 keyboard inputs.
 
 You can examine the binary data with `xxd file.bin` which gives us a hex dump.
+
+Stack and Segmentation
+-------
+
+- Can be used to retrieve a value later simple by just pushing a register value.
+  
+```nasm
+mov bp, 0x8000 ; Set the base of the stack a little above where the BIOS loads, base pointer
+mov sp,bp ; stack pointer
+mov ah, 0x0e
+
+push 'A'
+
+mov al, 'B'
+int 0x10
+
+pop bx ; Storing the push value
+mov al, bl
+int 0x10
+```
+This will print `BA`.
+
+- You can `push` and `pop` only 16bit registers i.e
+  > here image
+
+- Segments are used in case where you want more storage space for your work. You can have segments for data(`ds`), code(`cs`), stack(`ss`). Absolute memory in a segment comes out to be `16*ds + offset`
+
+> Instead of this `[org 0x7c00]` origin memory, we can offset the memory like 
+
+```nasm
+mov ds, 0x7c0
+
+; Which computes to 16*[0x7c0] + offset = [0x7c00] + offset
+```
+
+Reading from Disk
+-----
 
