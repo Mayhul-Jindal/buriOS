@@ -166,9 +166,9 @@ int 0x10
 ```
 This will print `BA`.
 
-- You can `push` and `pop` only 16bit registers i.e
-  > here image
-
+- You can `push` and `pop` only 16bit registers
+  ![](img/Screenshot%202022-03-04%20142058.jpg)
+  
 - Segments are used in case where you want more storage space for your work. You can have segments for data(`ds`), code(`cs`), stack(`ss`). Absolute memory in a segment comes out to be `16*ds + offset`
 
 > Instead of this `[org 0x7c00]` origin memory, we can offset the memory like 
@@ -181,4 +181,5 @@ mov ds, 0x7c0
 
 Reading from Disk
 -----
+
 
