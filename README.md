@@ -9,11 +9,18 @@
 
 4. Now basically use vscode
 
-# Theory For Boot Sector
+# Boot Sector
 
+## What is a Boot Sector?
+
+A boot sector is a reserved sector of a disk or storage device that contains the necessary data or code used to complete the boot process of a computer or disk.
+
+A boot sector is also known as a boot block.
+
+## Usage of Boot Sector?
 
 When the computer boots, the BIOS doesn't know how to load the OS, so it
-delegates that task to the boot sector. 
+delegates that task to the [boot sector](#what-is-a-boot-sector). 
 
 Thus, the boot sector must be placed in a known, standard location. 
 That location is the first sector of the disk (cylinder 0, head 0, sector 0) and it takes 512 bytes.
