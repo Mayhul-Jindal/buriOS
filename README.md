@@ -1,6 +1,8 @@
 Setup
 -----
 
+
+
 a
 
 1. Download [NASM](https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/) which is an assembler for assembly file.
