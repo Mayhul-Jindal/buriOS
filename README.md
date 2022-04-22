@@ -1,9 +1,5 @@
-Setup
------
+# Setup
 
-
-
-a
 
 1. Download [NASM](https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/) which is an assembler for assembly file.
 
@@ -13,16 +9,20 @@ a
 
 4. Now basically use vscode
 
-Theory For Boot Sector
-------
+# Theory For Boot Sector
+
 
 When the computer boots, the BIOS doesn't know how to load the OS, so it
-delegates that task to the boot sector. Thus, the boot sector must be
-placed in a known, standard location. That location is the first sector
-of the disk (cylinder 0, head 0, sector 0) and it takes 512 bytes.
+delegates that task to the boot sector. 
 
-To make sure that the "disk is bootable", the BIOS checks that bytes
-511 and 512 of the alleged boot sector are bytes `0xAA55`.
+Thus, the boot sector must be placed in a known, standard location. 
+That location is the first sector of the disk (cylinder 0, head 0, sector 0) and it takes 512 bytes.
+
+The BIOS checks that bytes 511 and 512 of the alleged boot sector are bytes `0xAA55`. 
+
+If this is found to be true, then the BIOS will 'try' booting the system. Notice the emphasis on the word try because it is possible that the other bytes of the boot sector are corrupted, resulting in improper or no booting.
+
+If in case it's not found (it garbled or 0x0000), we'll get an error message from the BIOS that a bootable disk (where a bootable disk is one which has the magic number `0xAA55` as the last 2 bytes of the first sector, irrespective of it containing uncorrupted boot information) was not found or the system will try to boot the next disk if in case more than one disk is installed in the machine.
 
 This is the simplest boot sector ever:
 
@@ -37,8 +37,8 @@ It is basically all zeros, ending with the 16-bit value
 `0xAA55` (beware of endianness, x86 is little-endian). 
 The first three bytes perform an infinite jump
 
-Simplest boot sector ever
--------------------------
+# Simplest boot sector ever
+
 
 You can either write the above 512 bytes
 with a binary editor, or just write a very
@@ -77,8 +77,8 @@ You will see a window open which says "Booting from Hard Disk...". That means se
 
 ---
 
-Basic Stuff
-------
+# Basic Stuff
+
 
 1. Write each character of the "Hello", word into the register `al` (lower part of `ax`), the bytes `0x0e` into `ah` (an Interept service routines which indicates tele-type mode) and raise interrupt `0x10` which causes screen-related ISR to invoke.
    
@@ -149,8 +149,8 @@ db 0x55, 0xaa
 
 You can examine the binary data with `xxd file.bin` which gives us a hex dump.
 
-Stack and Segmentation
--------
+# Stack and Segmentation
+
 
 - Can be used to retrieve a value later simple by just pushing a register value.
   
@@ -183,7 +183,4 @@ mov ds, 0x7c0
 ; Which computes to 16*[0x7c0] + offset = [0x7c00] + offset
 ```
 
-Reading from Disk
------
-
-
+# Reading from Disk
